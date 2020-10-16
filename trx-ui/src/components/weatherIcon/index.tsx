@@ -15,31 +15,45 @@ import {
   faCloudMeatball,
 } from '@fortawesome/free-solid-svg-icons';
 import { weatherIcon } from '../../common/types';
+
 function WeatherIcon({ wabbr }: weatherIcon) {
+  let selectedIcon = faRainbow;
   switch (wabbr) {
     case 'sn':
-      return <FontAwesomeIcon icon={faSnowflake} className="Icon" />;
+      selectedIcon = faSnowflake;
+      break;
     case 'sl':
-      return <FontAwesomeIcon icon={faUmbrella} className="Icon" />;
+      selectedIcon = faUmbrella;
+      break;
     case 'h':
-      return <FontAwesomeIcon icon={faCloudMeatball} className="Icon" />;
+      selectedIcon = faCloudMeatball;
+      break;
     case 't':
-      return <FontAwesomeIcon icon={faBolt} className="Icon" />;
+      selectedIcon = faBolt;
+      break;
     case 'hr':
-      return <FontAwesomeIcon icon={faCloudShowersHeavy} className="Icon" />;
+      selectedIcon = faCloudShowersHeavy;
+      break;
     case 'lr':
-      return <FontAwesomeIcon icon={faCloudRain} className="Icon" />;
+      selectedIcon = faCloudRain;
+      break;
     case 's':
-      return <FontAwesomeIcon icon={faCloudSunRain} className="Icon" />;
+      selectedIcon = faCloudSunRain;
+      break;
     case 'hc':
-      return <FontAwesomeIcon icon={faCloud} className="Icon" />;
+      selectedIcon = faCloud;
+      break;
     case 'lc':
-      return <FontAwesomeIcon icon={faCloudSun} className="Icon" />;
+      selectedIcon = faCloudSun;
+      break;
     case 'c':
-      return <FontAwesomeIcon icon={faSun} className="Icon" />;
+      selectedIcon = faSun;
+      break;
     default:
-      return <FontAwesomeIcon icon={faRainbow} className="Icon" />;
+      selectedIcon = faRainbow;
   }
+
+  return <FontAwesomeIcon icon={selectedIcon} className="Icon" />;
 }
 
 export default WeatherIcon;

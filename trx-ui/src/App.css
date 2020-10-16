@@ -12,8 +12,12 @@ body {
   min-width: 24rem;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
 }
-
+.App .Icon {
+  font-size: 2rem;
+  align-self: center;
+}
 .InputGroup {
   display: flex;
   justify-content: center;
