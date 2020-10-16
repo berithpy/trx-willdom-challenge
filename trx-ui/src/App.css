@@ -1,38 +1,106 @@
+body {
+  background-color: #edddd4;
+}
+
 .App {
   text-align: center;
+  display: grid;
+  place-items: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.Main {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 80vh;
+  width: 50vw;
+  min-height: 24rem;
+  min-width: 24rem;
+  margin-top: auto;
 }
 
-.App-link {
-  color: #61dafb;
+.InputGroup {
+  display: flex;
+  justify-content: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.SearchSelect {
+  width: 50%;
+  padding-right: 1rem;
+}
+
+.DateInput {
+  padding: 0 1rem;
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.DateLocations {
+  --scrollbarBG: #cfd8dc;
+  --thumbBG: #90a4ae;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  min-height: 10vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+.DateLocations::-webkit-scrollbar {
+  width: 12px;
+}
+
+.DateLocations::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: var(--scrollbarBG);
+}
+
+.DateLocations::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG);
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
+}
+
+.Paper {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  align-items: center;
+  width: 35rem;
+  height: 17rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  background-color: #f8f4f1;
+  border-radius: 2px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.Paper p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.Paper .Icon {
+  font-size: 1rem;
+  transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.Paper:hover .Icon {
+  font-size: 3rem;
+}
+.Paper .MinMax {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.Paper .MinMax .TempGroup {
+  margin: 0 0.5rem;
+}
+.Paper .Date {
+  margin-top: auto;
 }
