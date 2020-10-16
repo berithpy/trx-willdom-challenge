@@ -1,6 +1,7 @@
 import React from 'react';
 
 import WeatherIcon from '../weatherIcon';
+import { dateLocation } from '../../common/types';
 const days = [
   'Sunday',
   'Monday',
@@ -11,23 +12,6 @@ const days = [
   'Saturday',
   'Sunday',
 ];
-
-interface dateLocation {
-  weather_state_name: string;
-  weather_state_abbr: string;
-  wind_direction_compass?: string;
-  created?: string;
-  applicable_date: string;
-  min_temp?: number | null;
-  max_temp?: number | null;
-  the_temp?: number | null;
-  wind_speed?: number | null;
-  wind_direction?: number | null;
-  air_pressure?: number | null;
-  humidity?: number | null;
-  visibility?: number | null;
-  predictability?: number | null;
-}
 
 function WeatherBox({
   weather_state_name,

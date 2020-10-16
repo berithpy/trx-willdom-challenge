@@ -14,9 +14,7 @@ import {
   faSnowflake,
   faCloudMeatball,
 } from '@fortawesome/free-solid-svg-icons';
-interface weatherIcon {
-  wabbr: string;
-}
+import { weatherIcon } from '../../common/types';
 function WeatherIcon({ wabbr }: weatherIcon) {
   switch (wabbr) {
     case 'sn':

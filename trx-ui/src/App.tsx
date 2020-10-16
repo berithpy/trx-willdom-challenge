@@ -1,97 +1,20 @@
 import React from 'react';
 import './App.css';
-import useSWR from 'swr';
 import fetch from './service/fetch';
 import Select from 'react-select';
 import WeatherBox from './components/weatherbox';
 import { ValueType } from 'react-select';
-interface Location {
-  latt_long: string;
-  location_type: string;
-  title: string;
-  woeid: string;
-}
-interface dateLocation {
-  weather_state_name: string;
-  weather_state_abbr: string;
-  wind_direction_compass?: string;
-  created?: string;
-  applicable_date: string;
-  min_temp?: number | null;
-  max_temp?: number | null;
-  the_temp?: number | null;
-  wind_speed?: number | null;
-  wind_direction?: number | null;
-  air_pressure?: number | null;
-  humidity?: number | null;
-  visibility?: number | null;
-  predictability?: number | null;
-}
-function addDays(date: Date, days: number) {
-  const copy = new Date(Number(date));
-  copy.setDate(date.getDate() + days);
-  return copy;
-}
-
-function getIsoString(date: Date) {
-  return date.toISOString().split('T')[0];
-}
-function getApiDate(date: string) {
-  return date.replace(/-/g, '/');
-}
+import { Location, dateLocation } from './common/types';
+import { addDays, getIsoString, getApiDate } from './common/utils';
+import { useLocationSearch, getDates } from './service/fetcher';
 const today = new Date();
-// const CORS_HELPER = 'https://cors-anywhere.herokuapp.com/';
-const CORS_HELPER = '';
-const BASE_URL = `${CORS_HELPER}https://www.metaweather.com/api/location/`;
-function useLocationSearch(searchText: string) {
-  const { data = [], error } = useSWR(
-    searchText ? `${BASE_URL}search/?query=${searchText}` : null,
-    fetch,
-    { shouldRetryOnError: false, errorRetryCount: 0 }
-  );
-  return {
-    data: data,
-    isLoading: !error && !data,
-    error: error,
-  };
-}
 
-function useLocation(woeid: string, date: string = '') {
-  let fetchUrl = woeid ? `${BASE_URL}${woeid}/` : null;
-  if (date) fetchUrl = `${fetchUrl}${date}`;
-  const { data = [], error } = useSWR(fetchUrl, fetch, {
-    shouldRetryOnError: false,
-    errorRetryCount: 0,
-  });
-  return {
-    data: data,
-    isLoading: !error && !data,
-    error: error,
-  };
-}
-async function getDates(woeid: string, date: string) {
-  let promises: Promise<dateLocation[]>[] = [];
-
-  for (let index = 0; index < 10; index++) {
-    if (!woeid || !date) {
-      console.log(!woeid || !date);
-      break;
-    }
-    let currentDate = getApiDate(getIsoString(addDays(new Date(date), index)));
-    let currentURL = `${BASE_URL}${woeid}/${currentDate}`;
-    promises.push(fetch(currentURL));
-  }
-  return await Promise.all(promises);
-}
 function App() {
   const [searchText, setSearchText] = React.useState('');
   const [selectedLocation, setSelectedLocation] = React.useState<string>('');
   const [selectedDate, setSelectedDate] = React.useState<string>('2020-10-16');
   const [datesLocation, setDatesLocation] = React.useState<dateLocation[][]>();
   const { data: searchData, isLoading, error } = useLocationSearch(searchText);
-  // Use basic fetch for the 10 dates
-  // do it in a service file
-  // check promise all
   const getDatesCallback = React.useCallback(
     async (selectedLocation, selectedDate) => {
       setDatesLocation(await getDates(selectedLocation, selectedDate));
