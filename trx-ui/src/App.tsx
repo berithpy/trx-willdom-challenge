@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
-import fetch from './service/fetch';
 import Select from 'react-select';
 import WeatherBox from './components/weatherbox';
 import { ValueType } from 'react-select';
 import { Location, dateLocation } from './common/types';
-import { addDays, getIsoString, getApiDate } from './common/utils';
+import { addDays } from './common/utils';
 import { useLocationSearch, getDates } from './service/fetcher';
+import { faSnowflake } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const today = new Date();
 
 function App() {
@@ -14,10 +15,13 @@ function App() {
   const [selectedLocation, setSelectedLocation] = React.useState<string>('');
   const [selectedDate, setSelectedDate] = React.useState<string>('2020-10-16');
   const [datesLocation, setDatesLocation] = React.useState<dateLocation[][]>();
+  const [loadingDates, setLoadingDates] = React.useState<boolean>(false);
   const { data: searchData, isLoading, error } = useLocationSearch(searchText);
   const getDatesCallback = React.useCallback(
     async (selectedLocation, selectedDate) => {
+      setLoadingDates(true);
       setDatesLocation(await getDates(selectedLocation, selectedDate));
+      setLoadingDates(false);
     },
     [setDatesLocation]
   );
@@ -59,7 +63,11 @@ function App() {
             }}
           ></input>
         </div>
+
         <div className="DateLocations">
+          <div hidden={!loadingDates} className="Spinner">
+            <FontAwesomeIcon spin icon={faSnowflake} size="3x" />
+          </div>
           {datesLocation &&
             datesLocation.map((dl) => {
               if (dl.length > 0) {
@@ -78,6 +86,7 @@ function App() {
                   />
                 );
               }
+              return <></>;
             })}
         </div>
       </div>

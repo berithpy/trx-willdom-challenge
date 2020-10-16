@@ -36,7 +36,6 @@ export async function getDates(woeid: string, date: string) {
 
   for (let index = 0; index < 10; index++) {
     if (!woeid || !date) {
-      console.log(!woeid || !date);
       break;
     }
     let currentDate = getApiDate(getIsoString(addDays(new Date(date), index)));

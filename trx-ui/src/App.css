@@ -44,7 +44,7 @@ body {
   margin-top: 1rem;
   display: flex;
   flex-direction: row;
-  min-height: 10vh;
+  min-height: 17rem;
   overflow-x: auto;
   overflow-y: hidden;
   padding-top: 1rem;
@@ -103,4 +103,8 @@ body {
 }
 .Paper .Date {
   margin-top: auto;
+}
+
+.Spinner {
+  margin: auto;
 }
