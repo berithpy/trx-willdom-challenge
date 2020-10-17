@@ -25,7 +25,7 @@ clean-install:
 
 migrate:
 	echo "Migrating"
-	cd db; npx sequelize db:create 
+	cd db; npx sequelize db:create || echo "db already exists"
 	cd db; npx sequelize db:migrate
 	cd db; npx sequelize db:seed:all
 

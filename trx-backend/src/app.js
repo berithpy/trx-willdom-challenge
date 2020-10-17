@@ -42,13 +42,14 @@ router.put('/users', async (ctx) => {
   };
   // I couldn't figure findorcreate out, ended up
   // with the brute approach
-  let user = await Models.User.findOne({ where });
+  let user = await Models.User.findOne({ where, paranoid: false });
   // This may or may not be dangerous but if this is ever in prod
-  // we should definetly make it safer to avoid injection
+  // we should definetly make it safer to avoid injection\
   if (!user) {
     user = await Models.User.create(newItem);
   } else {
-    await Models.User.update(newItem, { where });
+    await Models.User.update(newItem, { where, paranoid: false });
+    await Models.User.restore({ where });
     user = await Models.User.findOne({
       where,
     });
@@ -78,4 +79,5 @@ router.delete('/users/:id', async (ctx) => {
 });
 
 app.use(router.routes()).use(router.allowedMethods());
-app.listen(3000);
+
+exports.app = app;
