@@ -23,10 +23,6 @@ The quickest way to launch the server is to run which launches the postgres cont
 `$ make stop`  
 Theres also a stop command to stop the postgres docker component
 
-### Test
-
-`$ npm run test`
-
 ## Other os
 
 ### Setup
@@ -51,7 +47,13 @@ After that you can start the server.
 
 `$ docker stop pg-docker`
 
+## Testing
+
+You need to have the database running and migrated to test.  
+You can run the tests with `$ npm run test`  
+Theres also a postman collection located at the same folder as this readme for api testing purposes.
+
 # TODO
 
-- Add some testing and mocking
+- Add some mocking
 - Add husky to lint on every commit

@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "test": "jest --detectOpenHandles",
+    "testWatch": "jest --detectOpenHandles --watch",
     "lint": "eslint --ext js src/**/* "
   },
   "author": "",
