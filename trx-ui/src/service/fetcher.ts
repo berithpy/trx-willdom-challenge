@@ -3,44 +3,56 @@ import useSWR from 'swr';
 import fetch from './fetch';
 import { BASE_URL } from '../common/constants';
 import { addDays, getIsoString, getApiDate } from '../common/utils';
-import { dateLocation } from '../common/types';
+import { DateLocation, Location } from '../common/types';
 
-export function useLocationSearch(searchText: string) {
-  const { data = [], error } = useSWR(
+interface UseLocationSearchFetcher {
+  data: Location[];
+  isLoading: boolean;
+  error: string;
+}
+interface UseLocationFetcher {
+  data: DateLocation[];
+  isLoading: boolean;
+  error: string;
+}
+
+export function useLocationSearch(searchText: string): UseLocationSearchFetcher {
+  const { data = [], error } = useSWR<Location[]>(
     searchText ? `${BASE_URL}search/?query=${searchText}` : null,
     fetch,
     { shouldRetryOnError: false, errorRetryCount: 0 }
   );
   return {
-    data: data,
+    data,
     isLoading: !error && !data,
-    error: error,
+    error,
   };
 }
 
-export function useLocation(woeid: string, date: string = '') {
+export function useLocation(woeid: string, date = ''): UseLocationFetcher {
   let fetchUrl = woeid ? `${BASE_URL}${woeid}/` : null;
   if (date) fetchUrl = `${fetchUrl}${date}`;
-  const { data = [], error } = useSWR(fetchUrl, fetch, {
+  const { data = [], error } = useSWR<DateLocation[]>(fetchUrl, fetch, {
     shouldRetryOnError: false,
     errorRetryCount: 0,
   });
   return {
-    data: data,
+    data,
     isLoading: !error && !data,
-    error: error,
+    error,
   };
 }
-export async function getDates(woeid: string, date: string) {
-  let promises: Promise<dateLocation[]>[] = [];
 
-  for (let index = 0; index < 10; index++) {
+export async function getDates(woeid: string, date: string, count = 10): Promise<DateLocation[][]> {
+  const promises: Promise<DateLocation[]>[] = [];
+
+  for (let index = 0; index < count; index += 1) {
     if (!woeid || !date) {
       break;
     }
-    let currentDate = getApiDate(getIsoString(addDays(new Date(date), index)));
-    let currentURL = `${BASE_URL}${woeid}/${currentDate}`;
+    const currentDate = getApiDate(getIsoString(addDays(new Date(date), index)));
+    const currentURL = `${BASE_URL}${woeid}/${currentDate}`;
     promises.push(fetch(currentURL));
   }
-  return await Promise.all(promises);
+  return Promise.all(promises);
 }

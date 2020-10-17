@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
@@ -14,9 +14,9 @@ import {
   faSnowflake,
   faCloudMeatball,
 } from '@fortawesome/free-solid-svg-icons';
-import { weatherIcon } from '../../common/types';
+import { WeatherIconProps } from '../../common/types';
 
-function WeatherIcon({ wabbr }: weatherIcon) {
+function WeatherIcon({ wabbr }: WeatherIconProps): ReactElement {
   let selectedIcon = faRainbow;
   switch (wabbr) {
     case 'sn':

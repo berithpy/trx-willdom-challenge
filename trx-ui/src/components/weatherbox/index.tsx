@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 import WeatherIcon from '../weatherIcon';
-import { dateLocation } from '../../common/types';
+import { DateLocation } from '../../common/types';
+
 const days = [
   'Sunday',
   'Monday',
@@ -21,10 +22,11 @@ function WeatherBox({
   max_temp,
   humidity,
   predictability,
-}: dateLocation) {
-  let dotw = days[new Date(applicable_date).getUTCDay()];
+  id,
+}: DateLocation): ReactElement {
+  const dotw = days[new Date(applicable_date).getUTCDay()];
   return (
-    <div className="Paper">
+    <div key={id} className="Paper">
       <p>{dotw}</p>
       <WeatherIcon wabbr={weather_state_abbr} />
       <p>{weather_state_name}</p>

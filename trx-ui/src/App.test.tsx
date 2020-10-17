@@ -1,9 +1,15 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitForElement } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('Render weather report text', async () => {
   const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const titleElement = await waitForElement(() => getByText(/weather report/i));
+  expect(titleElement).toBeInTheDocument();
+});
+
+test('Render inputs', async () => {
+  const { getByText } = render(<App />);
+  const selectElement = await waitForElement(() => getByText(/choose location/i));
+  expect(selectElement).toBeInTheDocument();
 });

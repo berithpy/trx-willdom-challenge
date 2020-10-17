@@ -1,28 +1,25 @@
-import React from 'react';
-import { dateLocation } from '../../common/types';
-import WeatherBox from '../weatherbox';
-
+import React, { ReactElement } from 'react';
 import { faSnowflake } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import WeatherBox from '../weatherbox';
+import { WeatherGroupProps } from '../../common/types';
 
-interface weatherGroupProps {
-  loadingDates: boolean;
-  datesLocation: dateLocation[][] | undefined;
-}
-
-function WeatherGroup({ loadingDates, datesLocation }: weatherGroupProps) {
+function WeatherGroup({ loadingDates, datesLocation }: WeatherGroupProps): ReactElement {
   return (
     <div className="DateLocations">
       <div hidden={!loadingDates} className="Spinner">
         <FontAwesomeIcon spin icon={faSnowflake} size="3x" />
       </div>
       {datesLocation &&
-        datesLocation.map((dl) => {
+        datesLocation.map((dl, index) => {
+          const key = `weatherBox${index}`;
           if (dl.length > 0) {
             // each dl is a day
             // that has multiple measurements
             return (
               <WeatherBox
+                key={key}
+                id={index}
                 weather_state_abbr={dl[0].weather_state_abbr}
                 weather_state_name={dl[0].weather_state_name}
                 min_temp={dl[0].min_temp}
@@ -34,7 +31,7 @@ function WeatherGroup({ loadingDates, datesLocation }: weatherGroupProps) {
               />
             );
           }
-          return <></>;
+          return <React.Fragment key={key} />;
         })}
     </div>
   );

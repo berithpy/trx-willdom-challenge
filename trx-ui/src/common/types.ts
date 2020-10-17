@@ -4,7 +4,8 @@ export interface Location {
   title: string;
   woeid: string;
 }
-export interface dateLocation {
+export interface DateLocation {
+  id?: number;
   weather_state_name: string;
   weather_state_abbr: string;
   wind_direction_compass?: string;
@@ -20,7 +21,11 @@ export interface dateLocation {
   visibility?: number | null;
   predictability?: number | null;
 }
-export interface weatherIcon {
+export interface WeatherIconProps {
   wabbr: string;
-  size?: any | null;
+}
+
+export interface WeatherGroupProps {
+  loadingDates: boolean;
+  datesLocation: DateLocation[][] | undefined;
 }

@@ -1,15 +1,14 @@
-import React from 'react';
-import Select from 'react-select';
-import { ValueType } from 'react-select';
+import React, { ReactElement } from 'react';
+import Select, { ValueType } from 'react-select';
 import { Location } from '../../common/types';
 
 interface InputGroupProps {
-  setSelectedLocation: Function;
+  setSelectedLocation: React.Dispatch<React.SetStateAction<string>>;
   searchData: Location[];
-  setSearchText: Function;
+  setSearchText: React.Dispatch<React.SetStateAction<string>>;
   isLoading: boolean;
   selectedDate: string;
-  setSelectedDate: Function;
+  setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
   maxDate: string;
   error: string;
 }
@@ -21,7 +20,7 @@ function InputGroup({
   selectedDate,
   setSelectedDate,
   maxDate,
-}: InputGroupProps) {
+}: InputGroupProps): ReactElement {
   return (
     <div className="InputGroup">
       <Select
@@ -37,7 +36,7 @@ function InputGroup({
         onInputChange={(newValue) => {
           setSearchText(newValue);
         }}
-        placeholder={'Choose location...'}
+        placeholder="Choose location..."
         isLoading={isLoading}
       />
       <input
@@ -52,7 +51,7 @@ function InputGroup({
         onChange={(e) => {
           setSelectedDate(e.target.value);
         }}
-      ></input>
+      />
     </div>
   );
 }
