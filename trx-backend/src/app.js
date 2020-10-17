@@ -1,11 +1,12 @@
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
-
 const Models = require('../db/models');
+const { entityResponse } = require('./utils');
 
 const app = new Koa();
 const router = new Router();
+
 app.use(bodyParser());
 
 // Should I use something like this for other common patterns?
@@ -26,7 +27,7 @@ router.post('/users', async (ctx) => {
     email: jsonRequest.email,
     bio: jsonRequest.bio,
   });
-  ctx.body = JSON.stringify(user);
+  ctx.body = JSON.stringify(entityResponse('users', [user]));
 });
 
 router.put('/users', async (ctx) => {
@@ -54,7 +55,7 @@ router.put('/users', async (ctx) => {
       where,
     });
   }
-  ctx.body = JSON.stringify(user);
+  ctx.body = JSON.stringify(entityResponse('users', [user]));
 });
 
 router.get('/users/:id*', async (ctx) => {
@@ -65,9 +66,8 @@ router.get('/users/:id*', async (ctx) => {
       id,
     };
   }
-  const response = await Models.User.findAll({ where });
-
-  ctx.body = JSON.stringify(response);
+  const users = await Models.User.findAll({ where });
+  ctx.body = JSON.stringify(entityResponse('users', users));
 });
 
 router.delete('/users/:id', async (ctx) => {

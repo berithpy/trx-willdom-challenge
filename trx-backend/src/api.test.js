@@ -28,7 +28,8 @@ test('User Get', async () => {
     .get('/users/100')
     .set('Accept', 'application/json');
   expect(response.status).toBe(200);
-  console.log(response.body.id);
+  const json = JSON.parse(response.text);
+  expect(json.users[0].name).toBe('asd');
 });
 
 test('User Delete', async () => {
